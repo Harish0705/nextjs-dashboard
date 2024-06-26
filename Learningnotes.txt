@@ -72,3 +72,73 @@ Furthermore, in production, whenever <Link> components appear in the browser's v
 prefetches the code for the linked route in the background. 
 By the time the user clicks the link, the code for the destination page will already be loaded in the background,
 and this is what makes the page transition near-instant!
+
+--------------------------------------------------------------------------------------------------------------------
+Using Server Components to fetch data
+By default, Next.js applications use React Server Components. Fetching data with Server Components is a 
+relatively new approach and there are a few benefits of using them:
+
+Server Components support promises, providing a simpler solution for asynchronous tasks like data fetching. 
+You can use async/await syntax without reaching out for useEffect, useState or data fetching libraries.
+Server Components execute on the server, so you can keep expensive data fetches and logic on the server and 
+only send the result to the client. As Server Components execute on the server, you can query the database 
+directly without an additional API layer.
+
+This file contains type definitions for your data app/lib/definitions.ts 
+This file contains the sql queries to fetch relevant data app/lib/data.ts
+
+Request waterfalls: The data fetch request happens sequentially which means it will wait for the previous request
+to complete and then calls the next request. This concept is fine to use if we want a condition to be satisfied before 
+you make the next request. But it is not a good approach if the requests are not dependent.
+
+Parallel data fetching: A common way to avoid waterfalls is to initiate all data requests at the same time 
+in parallel.
+
+In JavaScript, you can use the Promise.all() or Promise.allSettled() functions to initiate all promises at the same time. 
+For example, in data.ts, we're using Promise.all() in the fetchCardData() function:
+
+By using Parallel data fetching pattern, you can:
+
+Start executing all data fetches at the same time, which can lead to performance gains.
+Use a native JavaScript pattern that can be applied to any library or framework.
+
+However, there is one disadvantage of relying only on this JavaScript pattern: 
+what happens if one data request is slower than all the others? In case of dashboard, it has user data which is unique, 
+there fore it is dynamic rendering and application is only as fast as your slowest data fetch.
+
+By default, Next.js prerenders routes to improve performance, this is called Static Rendering. 
+So if your data changes, it won't be reflected in your dashboard.
+
+What is Static Rendering?
+
+With static rendering, data fetching and rendering happens on the server at build time (when you deploy) or 
+when revalidating data.
+
+Whenever a user visits your application, the cached result is served. Benefits of static rendering:
+
+1.Faster Websites - Prerendered content can be cached and globally distributed. This ensures that users 
+around the world can access your website's content more quickly and reliably.
+
+2.Reduced Server Load - Because the content is cached, your server does not have to dynamically generate content 
+for each user request.
+
+3.SEO - Prerendered content is easier for search engine crawlers to index, as the content is already 
+available when the page loads. This can lead to improved search engine rankings.
+
+Static rendering is useful for UI with no data or data that is shared across users, such as a static 
+blog post or a product page. 
+It might not be a good fit for a dashboard that has personalized data which is regularly updated.
+
+What is Dynamic Rendering?
+With dynamic rendering, content is rendered on the server for each user at request time 
+(when the user visits the page). 
+Benefits of dynamic rendering:
+
+1.Real-Time Data - Dynamic rendering allows your application to display real-time or frequently updated data. 
+This is ideal for applications where data changes often.
+2.User-Specific Content - It's easier to serve personalized content, such as dashboards or user profiles, 
+and update the data based on user interaction.
+3.Request Time Information - Dynamic rendering allows you to access information that can only be known at 
+request time, such as cookies or the URL search parameters.
+
+Note: With dynamic rendering, your application is only as fast as your slowest data fetch.

@@ -51,3 +51,24 @@ Partial rendering:
 One benefit of using layouts in Next.js is that on navigating to other pages, only the page components update 
 while the layout won't re-render. In our example, the layout with SideNav does not re-render, only the customers 
 and invoices pages page component is rendered
+
+-----------------------------------------------------------------------------------------------------------
+Link Component: Navigating between pages
+
+To direct the user to a page we use the <a> tag with the link on href attribute, this approach will lead to 
+full page refresh on each page navigation. 
+
+The Link component provided by Next.js solves the full page refresh when the user navigates to different pages. 
+NextJs looks for Link component and automatically splits the code and prefetches the page which the user will be redirected for that link
+
+Automatic code splitting and prefetching:
+
+To improve the navigation experience, Next.js automatically code splits your application by route segments.
+
+Splitting code by routes means that pages become isolated. If a certain page throws an error, 
+the rest of the application will still work.
+
+Furthermore, in production, whenever <Link> components appear in the browser's viewport, Next.js automatically 
+prefetches the code for the linked route in the background. 
+By the time the user clicks the link, the code for the destination page will already be loaded in the background,
+and this is what makes the page transition near-instant!

@@ -32,3 +32,22 @@ Preventing layout shift automatically when images are loading.
 Resizing images to avoid shipping large images to devices with a smaller viewport.
 Lazy loading images by default (images load as they enter the viewport).
 Serving images in modern formats, like WebP and AVIF, when the browser supports it.
+
+----------------------------------------------------------------------------------------------------
+
+Layout: In Next.js, you can use a special layout.tsx file to create UI that is shared between multiple pages.
+layout component takes the one or more page component or another layout as children and it can contain a 
+component component shared across pages. 
+Example. layout component in the dashboard folder app/dashboard/layout.tsx has the SideNav component that is shared across 
+customers and invoices pages 
+
+Root Layout: Any UI you add to the root layout will be shared across all pages in your application. 
+You can use the root layout to modify your <html> and <body> tags, and add metadata.
+
+The layout in /app/dashboard/layout.tsx is unique to the dashboard pages, you don't need to add any UI to the 
+root layout.
+
+Partial rendering:
+One benefit of using layouts in Next.js is that on navigating to other pages, only the page components update 
+while the layout won't re-render. In our example, the layout with SideNav does not re-render, only the customers 
+and invoices pages page component is rendered

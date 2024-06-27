@@ -142,3 +142,31 @@ and update the data based on user interaction.
 request time, such as cookies or the URL search parameters.
 
 Note: With dynamic rendering, your application is only as fast as your slowest data fetch.
+
+--------------------------------------------------------------------------------------------------------------------------
+What is streaming?
+Streaming is a data transfer technique that allows you to break down a route into smaller "chunks" and 
+progressively stream them from the server to the client as they become ready.
+
+Benifit:
+By streaming, you can prevent slow data requests from blocking your whole page. This allows the user to see 
+and interact with parts of the page without waiting for all the data to load before any UI can be 
+shown to the user.
+
+There are two ways you implement streaming in Next.js:
+
+1.For specific components, with <Suspense>.
+2.Page Streaming using loading.tsx
+
+Page Level Streaming with loaded.tsx
+1.loading.tsx is a special Next.js file built on top of Suspense, it allows you to create 
+fallback UI to show as a replacement while page content loads.
+2.Since <SideNav> is static, it's shown immediately. The user can interact with <SideNav>
+while the dynamic content is loading.
+3.The user doesn't have to wait for the page to finish loading before navigating away 
+(this is called interruptable navigation).
+
+Component level streaming with Suspense:
+Suspense allows you to defer rendering parts of your application until some condition 
+is met (e.g. data is loaded). You can wrap your dynamic components in Suspense. 
+Then, pass it a fallback component to show while the dynamic component loads.

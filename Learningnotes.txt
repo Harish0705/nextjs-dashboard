@@ -209,3 +209,42 @@ Implementing PPR:
 The great thing about Partial Prerendering is that you don't need to change your code 
 to use it. As long as you're using Suspense to wrap the dynamic parts of your route, 
 Next.js will know which parts of your route are static and which are dynamic.
+
+-----------------------------------------------------------------------------------
+Searching: Implementing search using url parameters
+
+Your search functionality will span the client and the server. When a user searches for 
+an invoice on the client, the URL params will be updated, data will be fetched on 
+the server, and the table will re-render on the server with the new data.
+
+These are the Next.js client hooks that you'll use to implement the search functionality:
+
+1.useSearchParams- Allows you to access the parameters of the current URL. For example, 
+the search params for this URL /dashboard/invoices?page=1&query=pending would look 
+like this: {page: '1', query: 'pending'}.
+2.usePathname - Lets you read the current URL's pathname. For example, for the route 
+/dashboard/invoices, usePathname would return '/dashboard/invoices'.
+3.useRouter - Enables navigation between routes within client components programmatically.
+There are multiple methods you can use.
+
+Here's a quick overview of the implementation steps:
+
+Capture the user's input.
+Update the URL with the search params.
+Keep the URL in sync with the input field.
+Update the table to reflect the search query.
+
+https://nextjs.org/learn/dashboard-app/adding-search-and-pagination
+
+
+When to use the useSearchParams() hook vs. the searchParams prop?
+
+You might have noticed you used two different ways to extract search params. 
+Whether you use one or the other depends on whether you're working on the client 
+or the server.
+
+<Search> is a Client Component, so you used the useSearchParams() hook to access the 
+params from the client.
+<Table> is a Server Component that fetches its own data, so you can pass the searchParams prop from the page to the component.
+As a general rule, if you want to read the params from the client, 
+use the useSearchParams() hook as this avoids having to go back to the server.

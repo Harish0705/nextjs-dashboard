@@ -170,3 +170,42 @@ Component level streaming with Suspense:
 Suspense allows you to defer rendering parts of your application until some condition 
 is met (e.g. data is loaded). You can wrap your dynamic components in Suspense. 
 Then, pass it a fallback component to show while the dynamic component loads.
+
+Where you place your suspense boundaries will vary depending on your application. 
+In general, it's good practice to move your data fetches down to the components 
+that need it, and then wrap those components in Suspense. But there is nothing wrong 
+with streaming the sections or the whole page if that's what your application needs.
+
+-------------------------------------------------------------------------------------
+Route Groups: 
+
+If you create folder with enclosing the name in parenthesis, then NextJs
+consider it as a route group. Route groups allow you to organize files into logical 
+groups without affecting the URL path structure. 
+
+When you create a new folder using parentheses (), the name won't be included in the URL path. 
+So /dashboard/(overview)/page.tsx becomes /dashboard. 
+You can use route groups to seperate your application into sections. 
+Example (marketing) (sales)
+----------------------------------------------------------------------------
+
+Partial Prerendering (PPR):
+
+Next.js 14 introduced an experimental version of Partial Prerendering – a new rendering 
+model that allows you to combine the benefits of static and dynamic rendering 
+in the same route.
+
+Example: https://www.partialprerendering.com/
+
+When a user visits a route:
+
+1.A static route shell that includes the navbar and product information is served, 
+ensuring a fast initial load.
+2.The shell leaves holes where dynamic content like the cart and recommended products 
+will load in asynchronously.
+3.The async holes are streamed in parallel, reducing the overall load time of the page.
+
+Implementing PPR:
+The great thing about Partial Prerendering is that you don't need to change your code 
+to use it. As long as you're using Suspense to wrap the dynamic parts of your route, 
+Next.js will know which parts of your route are static and which are dynamic.

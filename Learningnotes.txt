@@ -267,3 +267,5 @@ authorized access.
 Server Actions achieve this through techniques like POST requests, encrypted closures, 
 strict input checks, error message hashing, and host restrictions, 
 all working together to significantly enhance your app's safety.
+
+https://nextjs.org/learn/dashboard-app/mutating-data
